@@ -186,6 +186,46 @@ document.querySelectorAll('[data-copy-email]').forEach((button) => {
     });
 });
 
+const lightboxDialog = document.querySelector('[data-lightbox-dialog]');
+
+if (lightboxDialog instanceof HTMLDialogElement) {
+    const lightboxImage = lightboxDialog.querySelector('[data-lightbox-image]');
+    const lightboxTitle = lightboxDialog.querySelector('[data-lightbox-title]');
+    const lightboxDesc = lightboxDialog.querySelector('[data-lightbox-desc]');
+    const closeButton = lightboxDialog.querySelector('[data-lightbox-close]');
+
+    document.querySelectorAll('[data-lightbox-open]').forEach((trigger) => {
+        trigger.addEventListener('click', () => {
+            const src = trigger.getAttribute('data-lightbox-src') || '';
+            const alt = trigger.getAttribute('data-lightbox-alt') || '';
+            const caption = trigger.getAttribute('data-lightbox-caption') || '';
+
+            if (!src || !(lightboxImage instanceof HTMLImageElement)) {
+                return;
+            }
+
+            lightboxImage.src = src;
+            lightboxImage.alt = alt;
+            if (lightboxTitle) {
+                lightboxTitle.textContent = alt;
+            }
+            if (lightboxDesc) {
+                lightboxDesc.textContent = caption;
+                lightboxDesc.hidden = caption === '';
+            }
+
+            lightboxDialog.showModal();
+        });
+    });
+
+    closeButton?.addEventListener('click', () => lightboxDialog.close());
+    lightboxDialog.addEventListener('click', (event) => {
+        if (event.target === lightboxDialog) {
+            lightboxDialog.close();
+        }
+    });
+}
+
 const portfolioSite = document.querySelector('.portfolio-site');
 
 if (portfolioSite instanceof HTMLElement) {

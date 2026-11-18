@@ -10,7 +10,7 @@ use Illuminate\View\View;
 
 class WorkController extends Controller
 {
-    public function __invoke(WorkItem $workItem): View
+    public function __invoke(WorkItem $workItem, ?string $slug = null): View
     {
         abort_unless($workItem->status === WorkStatus::Published, 404);
 
@@ -21,10 +21,20 @@ class WorkController extends Controller
         $portfolio['meta']['description'] = $workItem->summary;
         $coverImage = $workItem->media->first(fn ($media): bool => $media->kind === MediaKind::Image)?->fileUrl();
 
+        $otherWorks = WorkItem::query()
+            ->published()
+            ->where('id', '!=', $workItem->id)
+            ->with('media')
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->limit(3)
+            ->get();
+
         return view('portfolio.work', [
             'portfolio' => $portfolio,
             'profile' => $profile,
             'work' => $workItem,
+            'otherWorks' => $otherWorks,
             'canonicalUrl' => route('work.show', $workItem),
             'robots' => 'noindex, follow',
             'ogImage' => $coverImage ?? $profile->photoUrl(),

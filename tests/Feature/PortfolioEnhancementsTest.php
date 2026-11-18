@@ -228,4 +228,25 @@ class PortfolioEnhancementsTest extends TestCase
         $this->assertSame('Universitas Teknologi Muhammadiyah', $person['alumniOf'][0]['name']);
         $this->assertSame('BNSP Komputer', $person['hasCredential'][0]['name']);
     }
+
+    public function test_bukti_index_redirects_to_home_portfolio_section_and_project_page_shows_tech_and_other_projects(): void
+    {
+        $this->get('/bukti')->assertRedirect('/#bukti');
+
+        $current = WorkItem::factory()->published()->create([
+            'title' => 'Konten Workspace',
+            'caption' => 'Fitur utama: tiket produksi. Teknologi yang digunakan: PHP, Laravel, Alpine.js, dan Tailwind CSS.',
+            'sort_order' => 1,
+        ]);
+        WorkItem::factory()->published()->create(['title' => 'Kalkulator PoF', 'sort_order' => 2]);
+        WorkItem::factory()->create(['title' => 'Proyek Draf Rahasia', 'sort_order' => 3]);
+
+        $this->get($current->detailUrl())
+            ->assertOk()
+            ->assertSee('Teknologi')
+            ->assertSee('Alpine.js')
+            ->assertSee('Proyek & solusi lainnya', false)
+            ->assertSee('Kalkulator PoF')
+            ->assertDontSee('Proyek Draf Rahasia');
+    }
 }
