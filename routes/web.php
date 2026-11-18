@@ -19,7 +19,6 @@ Route::get('/', PortfolioController::class)->name('home');
 Route::permanentRedirect('/beranda', '/')->name('beranda');
 Route::get('/sitemap.xml', SitemapController::class)->withoutMiddleware('web')->name('sitemap');
 Route::get('/cv/unduh', CvDownloadController::class)->name('cv.download');
-Route::permanentRedirect('/bukti/4', '/');
 Route::get('/bukti/{workItem}', WorkController::class)->name('work.show');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{blogPost}', [BlogController::class, 'show'])->name('blog.show');

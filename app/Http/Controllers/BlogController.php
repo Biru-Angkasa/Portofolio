@@ -40,6 +40,7 @@ class BlogController extends Controller
             'activeCategory' => $activeCategory,
             'profile' => $profile,
             'portfolio' => $portfolio,
+            'robots' => ($posts->isEmpty() && $activeCategory === '') ? 'noindex, follow' : 'index, follow',
             'canonicalUrl' => $activeCategory !== '' ? route('blog.index', ['kategori' => $activeCategory]) : route('blog.index'),
         ]);
     }

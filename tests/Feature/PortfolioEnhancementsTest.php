@@ -201,4 +201,31 @@ class PortfolioEnhancementsTest extends TestCase
 
         $response->assertOk()->assertSee('Periksa kolom berikut:');
     }
+
+    public function test_empty_blog_archive_is_noindex_and_becomes_indexable_when_posts_exist(): void
+    {
+        $this->get(route('blog.index'))
+            ->assertOk()
+            ->assertSee('<meta name="robots" content="noindex, follow">', false);
+
+        BlogPost::factory()->published()->create();
+
+        $this->get(route('blog.index'))
+            ->assertOk()
+            ->assertSee('<meta name="robots" content="index, follow">', false);
+    }
+
+    public function test_profile_schema_includes_work_education_and_certification_entities(): void
+    {
+        $response = $this->get(route('home'));
+
+        preg_match('/<script type="application\/ld\+json">(.*?)<\/script>/s', $response->getContent(), $matches);
+        $this->assertArrayHasKey(1, $matches);
+        $schema = json_decode($matches[1], true, 512, JSON_THROW_ON_ERROR);
+
+        $person = $schema['mainEntity'];
+        $this->assertSame('Tarmoc', $person['worksFor'][0]['name']);
+        $this->assertSame('Universitas Teknologi Muhammadiyah', $person['alumniOf'][0]['name']);
+        $this->assertSame('BNSP Komputer', $person['hasCredential'][0]['name']);
+    }
 }

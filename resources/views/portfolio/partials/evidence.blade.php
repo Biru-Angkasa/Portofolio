@@ -9,7 +9,7 @@
                     @php($image = $work->media->first(fn ($media) => $media->kind === \App\MediaKind::Image))
                     @php($link = $work->media->first(fn ($media) => $media->kind === \App\MediaKind::Link))
                     <li class="portfolio-card flex flex-col overflow-hidden">
-                        <a href="{{ route('work.show', $work) }}" class="group flex flex-1 flex-col focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">
+                        <a href="{{ route('work.show', $work) }}" aria-label="{{ $work->title }}" class="group flex flex-1 flex-col focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">
                             @if ($image)
                                 <img src="{{ $image->fileUrl() }}" alt="{{ $image->label }}" loading="lazy" class="aspect-[16/10] w-full object-cover">
                             @else

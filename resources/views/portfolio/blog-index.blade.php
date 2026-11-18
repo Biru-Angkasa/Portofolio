@@ -3,7 +3,7 @@
 @section('content')
     <section class="mx-auto flex w-full max-w-7xl flex-col gap-10 px-5 py-14 md:px-8 md:py-20">
         <div class="flex flex-col gap-4">
-            <a href="{{ route('home') }}#blog" class="w-fit text-sm text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">← Kembali ke beranda</a>
+            <a href="{{ $categories->isNotEmpty() ? route('home').'#blog' : route('home') }}" class="w-fit text-sm text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">← Kembali ke beranda</a>
             <p class="section-label">Blog</p>
             <h1 class="section-title">{{ $portfolio['blog_title'] }}</h1>
             <p class="max-w-2xl text-base leading-8 text-soft">{{ $portfolio['blog_intro'] }}</p>

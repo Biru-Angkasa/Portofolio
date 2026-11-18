@@ -6,6 +6,10 @@ if (site instanceof HTMLElement) {
     const canPoint = () => finePointer.matches && !reducedMotion.matches;
 
     site.querySelectorAll('[data-tech-text]').forEach((target) => {
+        const heading = target.closest('h1, h2, h3, h4, h5, h6');
+        if (heading instanceof HTMLElement && !heading.hasAttribute('aria-label')) {
+            heading.setAttribute('aria-label', heading.textContent.trim());
+        }
         const text = target.textContent;
         const accessible = document.createElement('span');
         accessible.className = 'sr-only';

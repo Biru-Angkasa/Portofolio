@@ -10,6 +10,50 @@
         'knowsAbout' => collect($portfolio['skills'])->pluck('items')->flatten()->unique()->values()->all(),
     ];
 
+    $worksFor = collect($portfolio['experiences'] ?? [])
+        ->pluck('organization')
+        ->filter()
+        ->unique()
+        ->map(fn (string $organization): array => ['@type' => 'Organization', 'name' => $organization])
+        ->values()
+        ->all();
+
+    if ($worksFor !== []) {
+        $person['worksFor'] = count($worksFor) === 1 ? $worksFor[0] : $worksFor;
+    }
+
+    $alumniOf = collect($portfolio['education'] ?? [])
+        ->filter(fn (array $item): bool => filled($item['institution'] ?? null))
+        ->map(function (array $item): array {
+            $entry = ['@type' => 'EducationalOrganization', 'name' => $item['institution']];
+
+            if (filled($item['url'] ?? null)) {
+                $entry['sameAs'] = $item['url'];
+            }
+
+            return $entry;
+        })
+        ->values()
+        ->all();
+
+    if ($alumniOf !== []) {
+        $person['alumniOf'] = $alumniOf;
+    }
+
+    $credentials = collect($portfolio['certifications'] ?? [])
+        ->filter(fn (array $item): bool => filled($item['name'] ?? null))
+        ->map(fn (array $item): array => [
+            '@type' => 'EducationalOccupationalCredential',
+            'name' => $item['name'],
+            'credentialCategory' => 'certificate',
+        ])
+        ->values()
+        ->all();
+
+    if ($credentials !== []) {
+        $person['hasCredential'] = $credentials;
+    }
+
     $socialUrls = collect($portfolio['socials'])
         ->whereNotIn('platform', ['whatsapp', 'telegram'])
         ->pluck('url')->filter()->unique()->values()->all();

@@ -25,6 +25,9 @@ if (scrollSections.length) {
     header?.append(progress);
 
     scrollSections.forEach((heading) => {
+        if (!heading.hasAttribute('aria-label')) {
+            heading.setAttribute('aria-label', heading.textContent.trim());
+        }
         const accessible = document.createElement('span');
         accessible.className = 'sr-only';
         accessible.textContent = heading.textContent;
