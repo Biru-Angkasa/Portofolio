@@ -17,7 +17,15 @@ class HomeRedirectTest extends TestCase
             'title' => 'Konten Workspace - Produksi Konten',
         ]);
 
+        $this->get('https://portfolio.example/')
+            ->assertOk()
+            ->assertSee('https://portfolio.example/bukti/4/konten-workspace-produksi-konten', false);
+
         $this->get('https://portfolio.example/bukti/'.$work->id)
+            ->assertOk()
+            ->assertSee('Konten Workspace - Produksi Konten');
+
+        $this->get('https://portfolio.example/bukti/4/konten-workspace-produksi-konten')
             ->assertOk()
             ->assertSee('Konten Workspace - Produksi Konten');
     }
