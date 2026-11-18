@@ -26,7 +26,8 @@ class StoreWorkMediaRequest extends FormRequest
      */
     public function rules(): array
     {
-        $kind = $this->string('kind')->toString();
+        $rawKind = $this->input('kind');
+        $kind = is_string($rawKind) ? $rawKind : '';
 
         return [
             'kind' => ['required', Rule::enum(MediaKind::class)],

@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['title', 'category', 'summary', 'role', 'period', 'caption', 'status', 'sort_order'])]
+#[Fillable(['title', 'category', 'summary', 'role', 'period', 'caption', 'outcome', 'status', 'sort_order'])]
 class WorkItem extends Model
 {
     /** @use HasFactory<WorkItemFactory> */

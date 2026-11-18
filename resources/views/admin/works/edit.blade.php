@@ -6,6 +6,14 @@
     <h1 class="text-3xl font-semibold">Edit bukti</h1>
     <p class="text-sm leading-relaxed text-soft">Sebelum mengunggah, samarkan nama pelanggan, nomor seri, alamat IP, wajah orang lain, dan data perusahaan yang tidak boleh dipublikasikan. Jangan unggah CV asli atau nomor telepon.</p>
 
+    @if ($errors->any())
+        <ul role="alert" class="rounded-xl bg-red-50 p-5 text-sm text-red-800">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    @endif
+
     <form method="POST" action="{{ route('admin.works.update', $work) }}" class="flex flex-col gap-4">
         @csrf
         @method('PUT')
@@ -27,7 +35,7 @@
                             <p class="font-semibold">{{ $media->label }}</p>
                             <p class="text-sm text-soft">{{ $media->kind->value }}</p>
                         </div>
-                        <form method="POST" action="{{ route('admin.media.destroy', [$work, $media]) }}">
+                        <form method="POST" action="{{ route('admin.media.destroy', [$work, $media]) }}" data-confirm-delete="Hapus media ini dari bukti kerja?">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-sm text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">Hapus</button>
@@ -63,20 +71,13 @@
                 URL HTTPS
                 <input type="url" name="url" value="{{ old('url') }}" placeholder="https://" class="border border-line bg-paper px-3 py-2">
             </label>
-            @if ($errors->any())
-                <ul class="flex flex-col gap-1 text-sm text-accent">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            @endif
             <button type="submit" class="w-fit border border-ink px-4 py-2 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">Lampirkan</button>
         </form>
     </section>
 
-    <form method="POST" action="{{ route('admin.works.destroy', $work) }}">
+    <form method="POST" action="{{ route('admin.works.destroy', $work) }}" data-confirm-delete="Hapus bukti kerja ini beserta seluruh medianya?">
         @csrf
         @method('DELETE')
-        <button type="submit" class="text-sm text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">Hapus bukti ini</button>
+        <button type="submit" class="text-sm text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">Hapus bukti ini</button>
     </form>
 @endsection

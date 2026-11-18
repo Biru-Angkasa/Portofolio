@@ -24,8 +24,8 @@ class CreatePortfolioAdmin extends Command
             return self::FAILURE;
         }
 
-        if (strlen($password) < 12 || $password !== $confirmation) {
-            $this->error('Kata sandi minimal 12 karakter dan harus sama saat diulang.');
+        if (mb_strlen($password) < 8 || $password !== $confirmation) {
+            $this->error('Kata sandi minimal 8 karakter dan harus sama saat diulang.');
 
             return self::FAILURE;
         }

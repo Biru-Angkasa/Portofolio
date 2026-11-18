@@ -8,6 +8,7 @@ use App\MediaKind;
 use App\Models\WorkItem;
 use App\Models\WorkMedia;
 use Illuminate\Http\RedirectResponse;
+use RuntimeException;
 
 class WorkMediaController extends Controller
 {
@@ -26,12 +27,18 @@ class WorkMediaController extends Controller
         if ($kind === MediaKind::Link) {
             $attributes['url'] = $request->validated('url');
         } else {
-            $attributes['path'] = $request->file('file')->store('work/'.$workItem->id, 'public');
+            $path = $request->file('file')->store('work/'.$workItem->id, 'public');
+
+            if ($path === false) {
+                throw new RuntimeException('Berkas media tidak dapat disimpan.');
+            }
+
+            $attributes['path'] = $path;
         }
 
         $workItem->media()->create($attributes);
 
-        return back();
+        return back()->with('status', 'Media dilampirkan.');
     }
 
     public function destroy(WorkItem $workItem, WorkMedia $workMedia): RedirectResponse
@@ -40,6 +47,6 @@ class WorkMediaController extends Controller
 
         $workMedia->delete();
 
-        return back();
+        return back()->with('status', 'Media dihapus.');
     }
 }

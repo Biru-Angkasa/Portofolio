@@ -1,6 +1,6 @@
 # Portofolio Tian Maysa
 
-Situs satu halaman untuk Network & Technical Support Engineer, dibangun dengan Laravel, Blade, Vite, dan Tailwind CSS. Teks pengalaman ada di `config/portfolio.php`. Foto profil dan bukti kerja disimpan lewat admin.
+Situs portofolio untuk Network & Technical Support Engineer, dibangun dengan Laravel, Blade, Vite, dan Tailwind CSS.
 
 ## Instalasi
 
@@ -9,6 +9,7 @@ composer install
 cp .env.example .env
 php artisan key:generate
 php artisan migrate
+php artisan db:seed
 php artisan storage:link
 npm install
 npm run build
@@ -27,24 +28,26 @@ Buka `http://localhost:8000`. `npm run dev` memuat aset saat pengembangan. Untuk
 
 ## Akun admin
 
-Tidak ada registrasi publik dan tidak ada kata sandi bawaan. Buat akun sendiri:
+Tidak ada registrasi publik dan tidak ada kata sandi bawaan. Buat akun admin secara interaktif:
 
 ```bash
 php artisan portfolio:admin
 ```
 
-Perintah itu menanyakan nama, email, dan kata sandi (minimal 12 karakter) secara interaktif. Masuk di `/login`. Jangan menyimpan kata sandi itu di repo atau di README.
+Masuk melalui `/login`.
 
-## Foto profil dan bukti kerja
+## Fitur admin
 
-1. Masuk ke `/login`, lalu buka `/admin`.
-2. Unggah foto profil JPEG, PNG, atau WebP (maksimal 5 MB) beserta teks alternatif. Pratinjau dipotong rapi ke rasio potret. Hapus foto kapan saja; situs kembali menampilkan monogram.
-3. Tambah bukti kerja: judul, kategori, ringkasan, peran, periode opsional, caption, lalu simpan sebagai draf atau terbit.
-4. Di halaman edit, lampirkan gambar, PDF, atau tautan HTTPS. Setiap gambar butuh teks alternatif. Urutan bukti diubah dengan tombol naik dan turun.
-5. Hanya item berstatus terbit yang muncul di situs publik. Draf tetap tersembunyi.
+- **Isi situs (`/admin/konten`)**: ubah teks Beranda, Tentang Saya & Keahlian, Pengantar Portofolio, Pendidikan & Sertifikasi (termasuk logo), Pengalaman, Pengantar Blog, dan Kontak & Media Sosial tanpa mengedit kode. Data bawaan berasal dari `config/portfolio.php` hingga disimpan melalui editor.
+- **Proyek & foto (`/admin`)**: unggah dan crop foto profil (JPEG, PNG, WebP; maks. 5 MB), serta kelola bukti kerja beserta lampiran gambar, PDF, atau tautan HTTPS.
+- **Artikel blog (`/admin/blog`)**: tulis artikel berformat Markdown ringan atau teks biasa dengan status draf/terbit dan gambar sampul. Artikel terbit tampil di beranda (6 terbaru) serta di halaman arsip `/blog`.
+- **Pengaturan akun & CV (`/admin/akun`)**: ubah kata sandi admin serta unggah atau hapus berkas CV PDF publik (bila tidak ada unggahan kustom, `/cv/unduh` memakai `public/Tian-Maysa-CV.pdf`).
 
-Sebelum mengunggah, samarkan nama pelanggan, nomor seri, alamat IP, wajah orang lain, dan data perusahaan yang tidak boleh dipublikasikan. Jangan unggah CV asli atau nomor telepon.
+Sebelum mengunggah gambar atau CV, samarkan nama pelanggan, nomor seri, alamat IP, nomor telepon pribadi, wajah orang lain, dan data perusahaan yang tidak boleh dipublikasikan.
 
-## Memperbarui teks
+## Pengujian & format kode
 
-Pengalaman, keahlian, pendidikan, dan kontak ada di `config/portfolio.php`.
+```bash
+php artisan test
+vendor/bin/pint --dirty --format agent
+```

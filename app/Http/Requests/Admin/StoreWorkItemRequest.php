@@ -16,7 +16,7 @@ class StoreWorkItemRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        foreach (['period', 'caption'] as $field) {
+        foreach (['period', 'caption', 'outcome'] as $field) {
             if ($this->input($field) === '') {
                 $this->merge([$field => null]);
             }
@@ -35,6 +35,7 @@ class StoreWorkItemRequest extends FormRequest
             'role' => ['required', 'string', 'max:500'],
             'period' => ['nullable', 'string', 'max:80'],
             'caption' => ['nullable', 'string', 'max:500'],
+            'outcome' => ['nullable', 'string', 'max:500'],
             'status' => ['required', Rule::enum(WorkStatus::class)],
         ];
     }
@@ -49,6 +50,8 @@ class StoreWorkItemRequest extends FormRequest
             'category.required' => 'Kategori wajib diisi.',
             'summary.required' => 'Ringkasan wajib diisi.',
             'role.required' => 'Peran atau tindakan wajib diisi.',
+            'outcome.string' => 'Hasil proyek harus berupa teks.',
+            'outcome.max' => 'Hasil proyek maksimal 500 karakter.',
             'status.required' => 'Pilih status draf atau terbit.',
         ];
     }
@@ -65,6 +68,7 @@ class StoreWorkItemRequest extends FormRequest
             'role',
             'period',
             'caption',
+            'outcome',
             'status',
         ]);
     }

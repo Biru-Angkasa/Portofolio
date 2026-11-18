@@ -1,2 +1,4 @@
 User-agent: *
 Disallow:
+
+Sitemap: https://tian-maysa.portolab.my.id/sitemap.xml

@@ -1,17 +1,15 @@
-<section id="kontak" class="bg-ink text-paper">
-    <div class="mx-auto grid w-full max-w-7xl gap-12 px-5 py-20 md:px-8 md:py-28 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.45fr)] lg:gap-20">
-        <div class="flex flex-col items-start gap-7">
-            <p class="text-xs font-semibold tracking-[0.16em] uppercase text-paper/65">{{ $works->isNotEmpty() ? '05' : '04' }} / Kontak</p>
-            <h2 class="max-w-2xl font-serif text-4xl leading-tight tracking-tight md:text-6xl">Ada pekerjaan teknis yang perlu dibicarakan?</h2>
-            <a href="mailto:{{ $portfolio['email'] }}" class="max-w-full border-b border-paper/60 pb-2 text-lg font-medium break-all transition-colors hover:text-paper/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paper md:text-2xl">
-                {{ $portfolio['email'] }} <span aria-hidden="true">↗</span>
-            </a>
+<section id="kontak" class="interactive-section" data-network-background="ripple">
+    <div class="mx-auto flex w-full max-w-7xl flex-col items-center gap-6 px-5 py-16 text-center md:px-8 md:py-24">
+        <p class="section-label">Kontak</p><h2 class="section-title">{{ $portfolio['contact_title'] }}</h2>
+        <p class="max-w-xl text-base leading-8 text-soft">{{ $portfolio['contact_intro'] }}</p>
+        <div class="flex flex-wrap items-center justify-center gap-4">
+            <a href="mailto:{{ $portfolio['email'] }}" class="portfolio-button max-w-full" data-magnet><span class="break-all">{{ $portfolio['email'] }}</span><span class="shrink-0" aria-hidden="true">↗</span></a>
+            <button type="button" data-copy-email="{{ $portfolio['email'] }}" class="inline-flex items-center gap-2 rounded-full border border-line bg-paper px-5 py-3.5 text-sm font-semibold text-accent transition-colors hover:border-accent hover:bg-wash focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">Salin email</button>
         </div>
-        <div class="flex flex-col justify-end gap-4 border-t border-paper/25 pt-6 text-sm lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8">
-            <p>{{ $portfolio['location'] }}</p>
-            <a href="{{ $portfolio['instagram']['url'] }}" class="w-fit text-paper/70 transition-colors hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paper" target="_blank" rel="noopener noreferrer">
-                Instagram {{ $portfolio['instagram']['handle'] }} ↗
-            </a>
+        <span class="sr-only" aria-live="polite" data-copy-email-status></span>
+        <p class="text-sm text-soft">{{ $portfolio['location'] }}</p>
+        <div class="flex flex-wrap justify-center gap-4">
+            @include('portfolio.partials.social-links', ['socials' => $portfolio['socials'], 'variant' => 'light'])
         </div>
     </div>
 </section>

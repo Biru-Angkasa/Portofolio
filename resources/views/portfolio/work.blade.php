@@ -1,12 +1,12 @@
 @extends('layouts.portfolio')
 
 @section('content')
-    <article class="mx-auto flex w-full max-w-7xl flex-col gap-12 px-5 py-12 md:gap-16 md:px-8 md:py-20">
+    <article class="mx-auto flex w-full max-w-7xl flex-col gap-8 px-5 pt-6 pb-12 md:gap-10 md:px-8 md:pt-8 md:pb-16">
         <p>
             <a href="{{ route('home') }}#bukti" class="border-b border-accent pb-1 text-sm text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">← Kembali ke dokumentasi</a>
         </p>
 
-        <header class="grid gap-8 border-b border-line pb-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-20">
+        <header class="grid gap-6 border-b border-line pb-6 md:pb-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-10">
             <div class="flex flex-col gap-5">
                 <p class="text-xs font-semibold tracking-[0.16em] uppercase text-accent">{{ $work->category }}@if ($work->period) · {{ $work->period }}@endif</p>
                 <h1 class="font-serif text-4xl leading-tight tracking-tight md:text-6xl">{{ $work->title }}</h1>
@@ -16,15 +16,23 @@
 
         <div class="grid gap-4 md:grid-cols-[12rem_minmax(0,1fr)] md:gap-12">
             <h2 class="text-xs font-semibold tracking-[0.16em] uppercase text-accent">Yang dikerjakan</h2>
-            <p class="max-w-3xl text-lg leading-relaxed">{{ $work->role }}</p>
+            <div class="flex max-w-3xl flex-col gap-3">
+                <p class="text-lg leading-relaxed">{{ $work->role }}</p>
+                @if ($work->caption)
+                    <p class="leading-relaxed text-soft">{{ $work->caption }}</p>
+                @endif
+            </div>
         </div>
 
-        @if ($work->caption)
-            <p class="max-w-3xl leading-relaxed text-soft md:ml-60">{{ $work->caption }}</p>
+        @if ($work->outcome)
+            <div class="grid gap-4 border-t border-line pt-6 md:grid-cols-[12rem_minmax(0,1fr)] md:gap-12 md:pt-8">
+                <h2 class="text-xs font-semibold tracking-[0.16em] uppercase text-accent">Hasil proyek</h2>
+                <p class="max-w-3xl text-lg leading-relaxed">{{ $work->outcome }}</p>
+            </div>
         @endif
 
         @if ($work->media->isNotEmpty())
-            <div class="flex max-w-4xl flex-col gap-12 border-t border-line pt-12">
+            <div class="flex max-w-4xl flex-col gap-8 border-t border-line pt-6 md:pt-8">
                 @foreach ($work->media as $media)
                     <figure class="flex flex-col gap-3">
                         @if ($media->kind === \App\MediaKind::Image)

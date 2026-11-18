@@ -2,13 +2,30 @@
 
 return [
 
+    'greeting' => 'Halo, saya',
+    'about_title' => 'Di balik perangkat dan koneksi.',
+    'skills_title' => 'Keahlian & peralatan',
+    'portfolio_title' => 'Proyek & solusi digital',
+    'portfolio_intro' => 'Aplikasi dan katalog yang saya kembangkan dengan bantuan AI untuk mendukung after-sales, akses informasi produk, dan koordinasi tim.',
+    'education_title' => 'Pendidikan & sertifikasi',
+    'experience_title' => 'Perjalanan profesional',
+    'blog_title' => 'Catatan & cerita',
+    'blog_intro' => 'Berbagi pengalaman, pengetahuan, dan hal yang saya pelajari.',
+    'contact_title' => 'Mari terhubung.',
+    'contact_intro' => 'Ada pekerjaan teknis yang perlu dibicarakan? Hubungi saya melalui email atau media sosial.',
+    'socials' => [
+        ['platform' => 'instagram', 'label' => 'Instagram @yaannmys', 'url' => 'https://www.instagram.com/yaannmys/'],
+        ['platform' => 'whatsapp', 'label' => 'WhatsApp', 'url' => ''],
+        ['platform' => 'facebook', 'label' => 'Facebook', 'url' => ''],
+    ],
+
     'name' => 'Tian Maysa',
 
     'monogram' => 'TM',
 
     'role' => 'Network & Technical Support Engineer',
 
-    'lead' => 'Saya menyelesaikan gangguan perangkat dan jaringan, dari after-sales dan MikroTik sampai infrastruktur fiber optic.',
+    'lead' => 'Saya menangani troubleshooting jaringan dan perangkat, konfigurasi MikroTik, serta layanan after-sales. Saya juga merancang aplikasi internal untuk mempercepat pencatatan dan koordinasi tim.',
 
     'location' => 'Jakarta Pusat, DKI Jakarta',
 
@@ -20,8 +37,8 @@ return [
     ],
 
     'meta' => [
-        'title' => 'Tian Maysa — Network & Technical Support Engineer',
-        'description' => 'Tian Maysa, Network & Technical Support Engineer di Jakarta Pusat. After-sales, troubleshooting jaringan, MikroTik, dan fiber optic.',
+        'title' => 'Web Portofolio Tian Maysa — Network & Technical Support Engineer',
+        'description' => 'Network & Technical Support Engineer di Jakarta. Berpengalaman di MikroTik, fiber optic, after-sales, dan pengembangan aplikasi internal. Lihat portofolio.',
     ],
 
     'highlights' => [
@@ -35,9 +52,16 @@ return [
             'label' => 'titik ODP',
             'context' => 'Saat PKL fiber di Telkom.',
         ],
+        [
+            'value' => '±5',
+            'label' => 'video per bulan',
+            'context' => 'Konten TikTok Tarmoc Official.',
+        ],
     ],
 
-    'about' => 'Saya mulai dari diagnosis dan perbaikan, pemeliharaan jaringan, sampai dukungan pelanggan di tempat atau remote. Hasilnya saya dokumentasikan, lalu saya buatkan video edukasi dan konten promosi kalau penjelasannya perlu lebih mudah diikuti.',
+    'about' => 'Di Tarmoc, saya menangani diagnosis dan perbaikan perangkat, pengujian produk, serta dukungan pelanggan secara langsung maupun remote. Pengalaman PKL di Telkom Indonesia mengasah kemampuan saya dalam tracing jalur, validasi koneksi melalui ODP, dan pemeliharaan fiber optic.
+
+Dari pekerjaan sehari-hari, saya menganalisis kebutuhan tim, merancang alur kerja, serta mengimplementasikan dan menguji aplikasi internal untuk pengelolaan komplain, retur, klaim garansi, dan produksi konten. Saya juga membuat katalog digital produk, dokumentasi teknis, serta video edukasi agar informasi lebih mudah dipahami dan digunakan.',
 
     'experiences' => [
         [
@@ -46,10 +70,13 @@ return [
             'period' => 'Desember 2023 – sekarang',
             'points' => [
                 'Menangani after-sales dan troubleshooting untuk 50+ pelanggan per minggu.',
-                'Menganalisis dan memperbaiki gangguan perangkat elektronik, hardware, dan jaringan.',
+                'Mendiagnosis dan memperbaiki gangguan perangkat elektronik, hardware, dan jaringan.',
                 'Memberi konsultasi teknis langsung maupun remote.',
                 'Menguji produk sebelum distribusi, mengonfigurasi perangkat berbasis MikroTik, serta memelihara jaringan internal dan perangkat pelanggan.',
+                'Menganalisis proses kerja manual dan merancang solusi digital untuk efisiensi pencatatan dan koordinasi tim.',
+                'Merancang dan mengimplementasikan aplikasi internal (komplain, retur, garansi, katalog produk, workspace konten) untuk pemantauan tindak lanjut dan koordinasi tim.',
                 'Membuat dokumentasi teknis, tutorial produk, dan konten promosi digital.',
+                'Memproduksi ±5 video edukasi dan promosi per bulan untuk TikTok Tarmoc Official.',
             ],
         ],
         [
@@ -106,7 +133,20 @@ return [
             ],
         ],
         [
-            'name' => 'Electronic',
+            'name' => 'Analisis & Solusi Digital',
+            'items' => [
+                'Analisis proses kerja manual',
+                'Pemetaan kebutuhan aplikasi internal',
+                'Perancangan alur kerja after-sales',
+                'Pengembangan dan pengujian aplikasi internal',
+                'Prompt engineering & requirement specification',
+                'Penyesuaian fitur dengan kebutuhan tim',
+                'Penyederhanaan pencatatan dan koordinasi tim',
+                'Python dasar',
+            ],
+        ],
+        [
+            'name' => 'Elektronika',
             'items' => [
                 'Soldering',
                 'Perbaikan PCB dasar',
@@ -146,11 +186,15 @@ return [
             'institution' => 'Universitas Teknologi Muhammadiyah',
             'program' => 'Sistem Teknologi Informasi',
             'period' => '2024 – sekarang',
+            'logo_path' => 'images/education/utmj.png',
+            'url' => 'https://www.utmj.ac.id/',
         ],
         [
             'institution' => 'SMK Muhammadiyah 04 Jakarta',
             'program' => 'Teknik Komputer dan Jaringan',
             'period' => '2020 – 2023',
+            'logo_path' => 'images/education/smkm4.png',
+            'url' => 'https://smkm4.sch.id/',
         ],
     ],
 

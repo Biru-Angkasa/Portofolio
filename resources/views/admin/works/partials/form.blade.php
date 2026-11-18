@@ -17,6 +17,10 @@
     <input type="text" name="role" value="{{ old('role', $item?->role ?? '') }}" required maxlength="500" class="border border-line bg-paper px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
 </label>
 <label class="flex flex-col gap-2 text-sm">
+    Hasil proyek
+    <textarea name="outcome" maxlength="500" rows="3" class="border border-line bg-paper px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">{{ old('outcome', $item?->outcome ?? '') }}</textarea>
+</label>
+<label class="flex flex-col gap-2 text-sm">
     Periode, jika ada
     <input type="text" name="period" value="{{ old('period', $item?->period ?? '') }}" maxlength="80" class="border border-line bg-paper px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
 </label>
@@ -31,7 +35,7 @@
         <option value="published" @selected(old('status', $item?->status?->value ?? 'draft') === 'published')>Terbit</option>
     </select>
 </label>
-@if ($errors->any())
+@if ($item === null && $errors->any())
     <ul class="flex flex-col gap-1 text-sm text-accent">
         @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>

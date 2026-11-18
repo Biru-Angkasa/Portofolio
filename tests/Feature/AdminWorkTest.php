@@ -55,6 +55,7 @@ class AdminWorkTest extends TestCase
     public function test_owner_can_upload_an_image_and_replacing_the_profile_photo_deletes_the_old_file(): void
     {
         Storage::fake('public');
+        Storage::fake('local');
         $owner = User::factory()->create();
 
         $this->actingAs($owner)->from(route('admin.works.index'))->post(route('admin.profile.update'), [
@@ -89,6 +90,7 @@ class AdminWorkTest extends TestCase
     public function test_profile_photo_can_be_removed(): void
     {
         Storage::fake('public');
+        Storage::fake('local');
         $owner = User::factory()->create();
 
         $this->actingAs($owner)->post(route('admin.profile.update'), [

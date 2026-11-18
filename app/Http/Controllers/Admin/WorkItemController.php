@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\UpdateWorkItemRequest;
 use App\Models\SiteProfile;
 use App\Models\WorkItem;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class WorkItemController extends Controller
@@ -32,7 +33,7 @@ class WorkItemController extends Controller
             'sort_order' => (int) WorkItem::query()->max('sort_order') + 1,
         ]);
 
-        return redirect()->route('admin.works.edit', $workItem);
+        return redirect()->route('admin.works.edit', $workItem)->with('status', 'Bukti kerja disimpan.');
     }
 
     public function edit(WorkItem $workItem): View
@@ -48,33 +49,52 @@ class WorkItemController extends Controller
     {
         $workItem->update($request->itemAttributes());
 
-        return redirect()->route('admin.works.edit', $workItem);
+        return redirect()->route('admin.works.edit', $workItem)->with('status', 'Bukti kerja diperbarui.');
     }
 
     public function destroy(WorkItem $workItem): RedirectResponse
     {
         $workItem->delete();
 
-        return redirect()->route('admin.works.index');
+        return redirect()->route('admin.works.index')->with('status', 'Bukti kerja dihapus.');
     }
 
     public function move(WorkItem $workItem, string $direction): RedirectResponse
     {
         abort_unless(in_array($direction, ['naik', 'turun'], true), 404);
 
-        $swap = WorkItem::query()
-            ->where('sort_order', $direction === 'naik' ? '<' : '>', $workItem->sort_order)
-            ->orderBy('sort_order', $direction === 'naik' ? 'desc' : 'asc')
-            ->orderBy('id', $direction === 'naik' ? 'desc' : 'asc')
-            ->first();
+        DB::transaction(function () use ($workItem, $direction): void {
+            $items = WorkItem::query()
+                ->orderBy('sort_order')
+                ->orderBy('id')
+                ->lockForUpdate()
+                ->get()
+                ->values();
 
-        if ($swap !== null) {
-            $current = $workItem->sort_order;
+            $currentIndex = $items->search(fn (WorkItem $item): bool => $item->id === $workItem->id);
 
-            $workItem->update(['sort_order' => $swap->sort_order]);
-            $swap->update(['sort_order' => $current]);
-        }
+            if ($currentIndex === false) {
+                return;
+            }
 
-        return back();
+            $targetIndex = $direction === 'naik' ? $currentIndex - 1 : $currentIndex + 1;
+
+            if ($targetIndex < 0 || $targetIndex >= $items->count()) {
+                return;
+            }
+
+            $ordered = $items->all();
+            [$ordered[$currentIndex], $ordered[$targetIndex]] = [$ordered[$targetIndex], $ordered[$currentIndex]];
+
+            foreach ($ordered as $position => $item) {
+                $nextOrder = $position + 1;
+
+                if ($item->sort_order !== $nextOrder) {
+                    $item->update(['sort_order' => $nextOrder]);
+                }
+            }
+        });
+
+        return back()->with('status', 'Urutan bukti kerja diperbarui.');
     }
 }
