@@ -1,5 +1,36 @@
 @extends('layouts.portfolio')
 
+@section('structured-data')
+    @php
+        $workImage = $work->media->first(fn ($media): bool => $media->kind === \App\MediaKind::Image)?->fileUrl();
+        $workTechnologies = $work->technologies();
+        $workSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'CreativeWork',
+            'name' => $work->title,
+            'description' => $work->summary,
+            'url' => $work->detailUrl(),
+            'inLanguage' => 'id-ID',
+            'dateModified' => $work->updated_at?->toAtomString(),
+            'author' => [
+                '@type' => 'Person',
+                '@id' => route('home').'#person',
+                'name' => $portfolio['name'],
+                'url' => route('home'),
+            ],
+        ];
+
+        if ($workImage) {
+            $workSchema['image'] = $workImage;
+        }
+
+        if ($workTechnologies !== []) {
+            $workSchema['keywords'] = implode(', ', $workTechnologies);
+        }
+    @endphp
+    <script type="application/ld+json">{!! \Illuminate\Support\Js::encode($workSchema) !!}</script>
+@endsection
+
 @section('content')
     @php
         $images = $work->media->filter(fn ($media): bool => $media->kind === \App\MediaKind::Image)->values();

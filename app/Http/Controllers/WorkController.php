@@ -35,8 +35,8 @@ class WorkController extends Controller
             'profile' => $profile,
             'work' => $workItem,
             'otherWorks' => $otherWorks,
-            'canonicalUrl' => route('work.show', $workItem),
-            'robots' => 'noindex, follow',
+            'canonicalUrl' => $workItem->detailUrl(),
+            'robots' => 'index, follow',
             'ogImage' => $coverImage ?? $profile->photoUrl(),
         ]);
     }

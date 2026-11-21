@@ -10,7 +10,7 @@ class WorkControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_published_project_remains_accessible_but_is_excluded_from_search_results(): void
+    public function test_published_project_is_indexable_with_slugged_canonical_url_and_schema(): void
     {
         $work = WorkItem::factory()->published()->create([
             'title' => 'Dokumentasi ODP',
@@ -19,12 +19,19 @@ class WorkControllerTest extends TestCase
 
         $response = $this->get('https://portfolio.example/bukti/'.$work->id.'?source=search');
 
+        $expectedUrl = 'https://portfolio.example/bukti/'.$work->id.'/dokumentasi-odp';
         $response->assertSee('Dokumentasi ODP');
-        $response->assertSee('<meta name="robots" content="noindex, follow">', false);
+        $response->assertSee('<meta name="robots" content="index, follow">', false);
         $response->assertSee('<title>Dokumentasi ODP — Tian Maysa</title>', false);
         $response->assertSee('<meta name="description" content="Validasi koneksi pelanggan.">', false);
-        $response->assertSee('<link rel="canonical" href="https://portfolio.example/bukti/'.$work->id.'">', false);
-        $response->assertSee('<meta property="og:url" content="https://portfolio.example/bukti/'.$work->id.'">', false);
+        $response->assertSee('<link rel="canonical" href="'.$expectedUrl.'">', false);
+        $response->assertSee('<meta property="og:url" content="'.$expectedUrl.'">', false);
+
+        preg_match('/<script type="application\/ld\+json">(.*?)<\/script>/s', $response->getContent(), $matches);
+        $this->assertArrayHasKey(1, $matches);
+        $schema = json_decode($matches[1], true, 512, JSON_THROW_ON_ERROR);
+        $this->assertSame('CreativeWork', $schema['@type']);
+        $this->assertSame('Dokumentasi ODP', $schema['name']);
     }
 
     public function test_project_metadata_escapes_title_and_summary(): void
