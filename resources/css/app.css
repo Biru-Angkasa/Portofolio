@@ -154,34 +154,6 @@ svg.portfolio-threads path:nth-child(even) {
     transform-origin: center center -0.3em;
 }
 
-.rotation-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    width: 2rem;
-    height: 2rem;
-    border: 1px solid transparent;
-    border-radius: 50%;
-    color: var(--color-soft);
-    cursor: pointer;
-}
-
-.rotation-toggle:hover {
-    background: var(--color-wash);
-    color: var(--color-accent);
-}
-
-.rotation-toggle:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 3px;
-}
-
-.rotation-toggle svg {
-    width: 1rem;
-    height: 1rem;
-}
-
 .tech-word {
     display: inline-block;
     white-space: nowrap;

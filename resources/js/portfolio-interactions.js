@@ -197,8 +197,7 @@ if (site instanceof HTMLElement) {
 
     site.querySelectorAll('[data-rotating]').forEach((root) => {
         const words = Array.from(root.querySelectorAll('[data-rotating-word]'));
-        const toggle = root.querySelector('[data-rotation-toggle]');
-        if (words.length < 2 || !(toggle instanceof HTMLButtonElement) || typeof Element.prototype.animate !== 'function') {
+        if (words.length < 2 || typeof Element.prototype.animate !== 'function') {
             return;
         }
 
@@ -215,10 +214,9 @@ if (site instanceof HTMLElement) {
         let index = 0;
         let timer = 0;
         let visible = false;
-        let paused = false;
         let generation = 0;
         const animations = new Set();
-        const eligible = () => visible && !paused && !reducedMotion.matches && document.visibilityState !== 'hidden';
+        const eligible = () => visible && !reducedMotion.matches && document.visibilityState !== 'hidden';
         const settle = () => words.forEach((word, position) => word.classList.toggle('is-active', position === index));
         const stop = () => {
             generation += 1;
@@ -282,18 +280,9 @@ if (site instanceof HTMLElement) {
                 index = 0;
                 settle();
             }
-            toggle.hidden = reducedMotion.matches;
             schedule();
         };
 
-        toggle.addEventListener('click', () => {
-            paused = !paused;
-            toggle.setAttribute('aria-pressed', String(paused));
-            toggle.setAttribute('aria-label', paused ? 'Lanjutkan pergantian keahlian' : 'Jeda pergantian keahlian');
-            toggle.querySelector('[data-rotation-pause]').toggleAttribute('hidden', paused);
-            toggle.querySelector('[data-rotation-play]').toggleAttribute('hidden', !paused);
-            sync();
-        });
         new IntersectionObserver(([entry]) => {
             visible = entry.isIntersecting;
             sync();

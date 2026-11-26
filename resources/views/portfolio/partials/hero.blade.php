@@ -23,10 +23,6 @@
                                 <span class="rotating-word {{ $loop->first ? 'is-active' : '' }}" data-rotating-word>{{ $skill['name'] }}</span>
                             @endforeach
                         </span>
-                        <button type="button" class="rotation-toggle" data-rotation-toggle hidden aria-label="Jeda pergantian keahlian" aria-pressed="false">
-                            <svg data-rotation-pause aria-hidden="true" viewBox="0 0 20 20" fill="currentColor"><path d="M6 5h3v10H6zm5 0h3v10h-3z" /></svg>
-                            <svg data-rotation-play hidden aria-hidden="true" viewBox="0 0 20 20" fill="currentColor"><path d="m7 4 9 6-9 6z" /></svg>
-                        </button>
                     </div>
                 @endif
             </div>
