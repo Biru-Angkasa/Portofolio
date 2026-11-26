@@ -626,3 +626,58 @@ svg.portfolio-threads path:nth-child(even) {
     border-top: 1px solid var(--color-line);
     margin: 2rem 0;
 }
+
+[data-parallax-speed] {
+    will-change: transform;
+}
+
+[data-horizontal-showcase].is-horizontal-enhanced .horizontal-viewport {
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 0.5rem;
+}
+
+[data-horizontal-showcase].is-horizontal-enhanced .horizontal-viewport::-webkit-scrollbar {
+    display: none;
+}
+
+[data-horizontal-showcase].is-horizontal-enhanced .horizontal-rail {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1.5rem;
+    width: max-content;
+}
+
+[data-horizontal-showcase].is-horizontal-enhanced .horizontal-rail > li {
+    width: min(84vw, 24rem);
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+}
+
+[data-horizontal-showcase].is-horizontal-pinned .horizontal-pin {
+    position: sticky;
+    top: 4.5rem;
+}
+
+[data-horizontal-showcase].is-horizontal-pinned .horizontal-viewport {
+    overflow: hidden;
+    scroll-snap-type: none;
+}
+
+[data-horizontal-showcase].is-horizontal-pinned .horizontal-rail {
+    will-change: transform;
+}
+
+[data-horizontal-showcase].is-horizontal-pinned .horizontal-rail > li {
+    width: 26rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-parallax-speed],
+    [data-horizontal-showcase] .horizontal-rail {
+        transform: none !important;
+        will-change: auto;
+    }
+}

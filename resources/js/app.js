@@ -3,6 +3,7 @@ import './portfolio-threads';
 import './portfolio-interactions';
 import './portfolio-network';
 import './portfolio-scroll';
+import './portfolio-motion';
 
 const toggle = document.querySelector('[data-menu-toggle]');
 const nav = document.querySelector('[data-menu]');
@@ -260,7 +261,7 @@ if (portfolioSite instanceof HTMLElement) {
             }
 
             return [group];
-        }).filter((target) => !target.matches('[data-scroll-reveal]') && !target.querySelector('[data-scroll-reveal]'));
+        }).filter((target) => !target.matches('[data-scroll-reveal], [data-horizontal-pin]') && !target.querySelector('[data-scroll-reveal]'));
 
         if ('IntersectionObserver' in window && typeof Element.prototype.animate === 'function') {
             const observer = new IntersectionObserver((entries) => {

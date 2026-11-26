@@ -1,5 +1,5 @@
-<section id="beranda">
-    <svg class="portfolio-threads" data-threads-still viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+<section id="beranda" data-parallax-scene>
+    <svg class="portfolio-threads" data-threads-still data-parallax-speed="0.16" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
         <path d="M-40 190 C 380 -110, 640 700, 970 230 S 1290 60, 1480 200" />
         <path d="M-40 216 C 380 -80, 640 730, 970 256 S 1290 86, 1480 226" />
         <path d="M-40 242 C 380 -50, 640 760, 970 282 S 1290 112, 1480 252" />
@@ -38,15 +38,15 @@
             </div>
         </div>
         <div class="portfolio-portrait relative mx-auto w-full max-w-md" data-depth>
-            <div class="absolute inset-6 rounded-full bg-[#e6eef9]" aria-hidden="true"></div>
-            <div class="profile-photo-shape relative flex aspect-square items-center justify-center overflow-hidden border-[12px] border-paper bg-accent">
+            <div class="absolute inset-6 rounded-full bg-[#e6eef9]" data-parallax-speed="0.09" aria-hidden="true"></div>
+            <div class="profile-photo-shape relative flex aspect-square items-center justify-center overflow-hidden border-[12px] border-paper bg-accent" data-parallax-speed="-0.04">
                 @if ($profile->photo_path)
                     <img src="{{ $profile->photoUrl() }}" alt="{{ $profile->photo_alt }}" class="h-full w-full object-cover">
                 @else
                     <span class="text-[7rem] font-semibold tracking-[-0.08em] text-white sm:text-[9rem]" aria-label="Monogram {{ $portfolio['name'] }}">{{ $portfolio['monogram'] }}</span>
                 @endif
             </div>
-            <p class="absolute right-1 bottom-8 max-w-[85%] rounded-2xl border border-line bg-paper px-5 py-4 text-xs font-medium text-accent shadow-sm">{{ $portfolio['location'] }}</p>
+            <p class="absolute right-1 bottom-8 max-w-[85%] rounded-2xl border border-line bg-paper px-5 py-4 text-xs font-medium text-accent shadow-sm" data-parallax-speed="-0.11">{{ $portfolio['location'] }}</p>
         </div>
     </div>
     @if ($portfolio['highlights'] !== [])
