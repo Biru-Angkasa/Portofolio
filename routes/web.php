@@ -13,16 +13,31 @@ use App\Http\Controllers\CvDownloadController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\WorkController;
+use App\Http\Middleware\PublicCacheHeaders;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Cookie\Middleware\EncryptCookies;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
+use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-Route::get('/', PortfolioController::class)->name('home');
+Route::withoutMiddleware([
+    EncryptCookies::class,
+    AddQueuedCookiesToResponse::class,
+    StartSession::class,
+    ShareErrorsFromSession::class,
+    PreventRequestForgery::class,
+])->middleware(PublicCacheHeaders::class)->group(function () {
+    Route::get('/', PortfolioController::class)->name('home');
+    Route::get('/bukti/{workItem}/{slug?}', WorkController::class)->name('work.show');
+    Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+    Route::get('/blog/{blogPost}', [BlogController::class, 'show'])->name('blog.show');
+});
+
 Route::permanentRedirect('/beranda', '/')->name('beranda');
 Route::get('/sitemap.xml', SitemapController::class)->withoutMiddleware('web')->name('sitemap');
-Route::get('/cv/unduh', CvDownloadController::class)->name('cv.download');
+Route::get('/cv/unduh', CvDownloadController::class)->withoutMiddleware('web')->name('cv.download');
 Route::redirect('/bukti', '/#bukti')->name('work.index');
-Route::get('/bukti/{workItem}/{slug?}', WorkController::class)->name('work.show');
-Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
-Route::get('/blog/{blogPost}', [BlogController::class, 'show'])->name('blog.show');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'create'])->name('login');

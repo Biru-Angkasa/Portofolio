@@ -249,4 +249,19 @@ class PortfolioEnhancementsTest extends TestCase
             ->assertSee('Kalkulator PoF')
             ->assertDontSee('Proyek Draf Rahasia');
     }
+
+    public function test_public_portfolio_pages_are_edge_cacheable_without_session_cookies(): void
+    {
+        $work = WorkItem::factory()->published()->create(['title' => 'Proyek Cache']);
+
+        foreach ([route('home'), $work->detailUrl(), route('blog.index')] as $url) {
+            $response = $this->get($url)->assertOk();
+            $cacheControl = (string) $response->headers->get('Cache-Control');
+
+            $this->assertStringContainsString('public', $cacheControl);
+            $this->assertStringContainsString('s-maxage=3600', $cacheControl);
+            $this->assertStringContainsString('stale-if-error=604800', $cacheControl);
+            $response->assertHeaderMissing('Set-Cookie');
+        }
+    }
 }
