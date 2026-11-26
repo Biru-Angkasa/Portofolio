@@ -113,7 +113,8 @@ if (portfolioRoot instanceof HTMLElement) {
     const progressBar = showcase?.querySelector('[data-horizontal-bar]');
     const cards = rail ? Array.from(rail.children) : [];
 
-    const HEADER_OFFSET = 68;
+    const siteHeader = portfolioRoot.querySelector(':scope > header');
+    const getHeaderOffset = () => Math.round(siteHeader?.getBoundingClientRect().height ?? 68);
     let pinnedMode = false;
     let trackStart = 0;
     let scrollableDistance = 1;
@@ -154,7 +155,7 @@ if (portfolioRoot instanceof HTMLElement) {
             return;
         }
 
-        const shouldPin = desktopMedia.matches && !reducedMotion.matches;
+        const shouldPin = !reducedMotion.matches;
         showcase.classList.add('is-horizontal-enhanced');
         showcase.classList.toggle('is-horizontal-pinned', shouldPin);
 
@@ -184,10 +185,12 @@ if (portfolioRoot instanceof HTMLElement) {
         maxTranslate = overflow;
         lastOffset = -1;
 
-        const pinHeight = Math.max(pin.offsetHeight, window.innerHeight - HEADER_OFFSET);
-        scrollableDistance = Math.max(1, maxTranslate);
+        const headerOffset = getHeaderOffset();
+        const pinHeight = Math.max(pin.offsetHeight, window.innerHeight - headerOffset);
+        const speedFactor = desktopMedia.matches ? 1 : 0.85;
+        scrollableDistance = Math.max(1, Math.round(maxTranslate * speedFactor));
         track.style.height = `${Math.round(pinHeight + scrollableDistance)}px`;
-        trackStart = window.scrollY + track.getBoundingClientRect().top - HEADER_OFFSET;
+        trackStart = window.scrollY + track.getBoundingClientRect().top - headerOffset;
 
         updateHorizontalScroll(window.scrollY);
     };
