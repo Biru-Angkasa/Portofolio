@@ -14,8 +14,13 @@
     --color-wash: #f3f6fb;
 }
 
-html {
+html,
+body {
+    max-width: 100%;
     overflow-x: clip;
+}
+
+html {
     scroll-padding-top: 6rem;
     color-scheme: light;
 }
@@ -59,6 +64,7 @@ html {
 #beranda {
     position: relative;
     isolation: isolate;
+    overflow-x: clip;
 }
 
 .portfolio-threads {
@@ -602,7 +608,16 @@ svg.portfolio-threads path:nth-child(even) {
     will-change: transform;
 }
 
+[data-horizontal-showcase],
+[data-horizontal-showcase] .horizontal-track,
+[data-horizontal-showcase] .horizontal-pin {
+    max-width: 100%;
+    overflow-x: clip;
+}
+
 [data-horizontal-showcase].is-horizontal-enhanced .horizontal-viewport {
+    width: 100%;
+    max-width: 100%;
     overflow-x: auto;
     overflow-y: visible;
     scroll-snap-type: x mandatory;
