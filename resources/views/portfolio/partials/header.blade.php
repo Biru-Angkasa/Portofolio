@@ -1,4 +1,4 @@
-<header class="sticky top-0 z-40 border-b border-line bg-paper/95 backdrop-blur-md">
+<header class="sticky top-0 z-40 border-b border-line bg-paper">
     <div class="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-x-6 px-5 py-5 md:px-8">
         <a href="{{ route('home') }}#beranda" class="text-xl font-semibold tracking-tight text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">{{ $portfolio['name'] }}</a>
         <button type="button" class="rounded-xl border border-line px-4 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent lg:hidden" data-menu-toggle aria-expanded="false" aria-controls="site-nav">Menu</button>

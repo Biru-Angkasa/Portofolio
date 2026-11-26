@@ -55,7 +55,6 @@ if (scrollSections.length) {
         words.forEach((word, index) => {
             const amount = clamp(reveal * (words.length + 0.7) - index + 0.3);
             word.style.setProperty('--word-opacity', (0.3 + amount * 0.7).toFixed(3));
-            word.style.setProperty('--word-blur', `${((1 - amount) * 2).toFixed(2)}px`);
             word.style.setProperty('--word-lift', `${((1 - amount) * 8).toFixed(2)}px`);
         });
     };

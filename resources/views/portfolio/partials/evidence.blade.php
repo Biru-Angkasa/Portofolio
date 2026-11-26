@@ -1,4 +1,4 @@
-<section id="bukti" class="interactive-section" data-network-background="nodes" @if ($works->count() > 1) data-horizontal-showcase @endif>
+<section id="bukti" class="interactive-section" @if ($works->count() > 1) data-horizontal-showcase @endif>
     @if ($works->isEmpty())
         <div class="mx-auto w-full max-w-7xl px-5 py-16 md:px-8 md:py-24">
             <div class="mx-auto mb-12 flex max-w-2xl flex-col gap-4 text-center">

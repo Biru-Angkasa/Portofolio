@@ -7,71 +7,100 @@ if (portfolioRoot instanceof HTMLElement) {
     const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
     /* -------------------------------------------------------------------------
-     * 1. Subtle Hero Scroll Parallax
+     * 1. Subtle Hero Scroll Parallax (cached geometry, zero scroll reflows)
      * ---------------------------------------------------------------------- */
     const parallaxScene = portfolioRoot.querySelector('[data-parallax-scene]');
     const parallaxLayers = parallaxScene
-        ? Array.from(parallaxScene.querySelectorAll('[data-parallax-speed]'))
+        ? Array.from(parallaxScene.querySelectorAll('[data-parallax-speed]')).map((el) => ({
+            el,
+            speed: Number(el.getAttribute('data-parallax-speed') || 0),
+        }))
         : [];
+    let sceneTop = 0;
+    let sceneHeight = 0;
 
     const resetParallax = () => {
-        parallaxLayers.forEach((layer) => {
-            layer.style.removeProperty('transform');
+        parallaxLayers.forEach(({ el }) => {
+            el.style.removeProperty('transform');
         });
     };
 
-    const updateParallax = () => {
+    const measureParallax = () => {
+        if (!parallaxScene) {
+            return;
+        }
+        const rect = parallaxScene.getBoundingClientRect();
+        sceneTop = window.scrollY + rect.top;
+        sceneHeight = rect.height;
+    };
+
+    const updateParallax = (scrollY) => {
         if (!parallaxScene || !parallaxLayers.length || reducedMotion.matches) {
             return;
         }
 
-        const rect = parallaxScene.getBoundingClientRect();
-        if (rect.bottom < -120 || rect.top > window.innerHeight + 120) {
+        const delta = scrollY - sceneTop;
+        if (delta < -120 || delta > sceneHeight + 120) {
             return;
         }
 
-        const scrollOffset = clamp(-rect.top, -120, rect.height);
-        parallaxLayers.forEach((layer) => {
-            const speed = Number(layer.getAttribute('data-parallax-speed') || 0);
-            const y = clamp(scrollOffset * speed, -44, 56);
-            layer.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
-        });
+        const clamped = clamp(delta, -120, sceneHeight);
+        for (let i = 0; i < parallaxLayers.length; i += 1) {
+            const { el, speed } = parallaxLayers[i];
+            const y = clamp(clamped * speed, -44, 56);
+            el.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
+        }
     };
 
     /* -------------------------------------------------------------------------
-     * 2. Pinned Experience Chapter HUD
+     * 2. Pinned Experience Chapter HUD (cached offsets)
      * ---------------------------------------------------------------------- */
     const experienceSection = portfolioRoot.querySelector('[data-pinned-experience]');
     const experienceItems = experienceSection
-        ? Array.from(experienceSection.querySelectorAll('[data-experience-item]'))
+        ? Array.from(experienceSection.querySelectorAll('[data-experience-item]')).map((el) => ({
+            el,
+            org: el.getAttribute('data-organization') || '',
+            top: 0,
+        }))
         : [];
     const experienceLabel = experienceSection?.querySelector('[data-experience-label]');
     const experienceCounter = experienceSection?.querySelector('[data-experience-counter]');
     const experienceProgress = experienceSection?.querySelector('[data-experience-progress]');
+    let lastExperienceIndex = -1;
 
-    const updateExperienceHud = () => {
+    const measureExperience = () => {
+        experienceItems.forEach((entry) => {
+            entry.top = window.scrollY + entry.el.getBoundingClientRect().top;
+        });
+    };
+
+    const updateExperienceHud = (scrollY) => {
         if (experienceItems.length < 2 || !experienceLabel || !experienceCounter || !experienceProgress) {
             return;
         }
 
-        const readingY = window.innerHeight * 0.36;
+        const readingY = scrollY + window.innerHeight * 0.36;
         let activeIndex = 0;
 
-        experienceItems.forEach((item, index) => {
-            if (item.getBoundingClientRect().top <= readingY) {
-                activeIndex = index;
+        for (let i = 0; i < experienceItems.length; i += 1) {
+            if (experienceItems[i].top <= readingY) {
+                activeIndex = i;
             }
-        });
+        }
 
+        if (activeIndex === lastExperienceIndex) {
+            return;
+        }
+
+        lastExperienceIndex = activeIndex;
         const total = experienceItems.length;
-        const org = experienceItems[activeIndex]?.getAttribute('data-organization') || '';
-        experienceLabel.textContent = org;
+        experienceLabel.textContent = experienceItems[activeIndex].org;
         experienceCounter.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
         experienceProgress.style.transform = `scaleX(${((activeIndex + 1) / total).toFixed(4)})`;
     };
 
     /* -------------------------------------------------------------------------
-     * 3. Pinned Horizontal Scroll Showcase (#bukti)
+     * 3. Pinned Horizontal Scroll Showcase (#bukti — zero reflow per frame)
      * ---------------------------------------------------------------------- */
     const showcase = portfolioRoot.querySelector('[data-horizontal-showcase]');
     const track = showcase?.querySelector('[data-horizontal-track]');
@@ -84,21 +113,31 @@ if (portfolioRoot instanceof HTMLElement) {
     const progressBar = showcase?.querySelector('[data-horizontal-bar]');
     const cards = rail ? Array.from(rail.children) : [];
 
+    const HEADER_OFFSET = 68;
     let pinnedMode = false;
+    let trackStart = 0;
+    let scrollableDistance = 1;
     let maxTranslate = 0;
-    let currentIndex = 0;
+    let currentIndex = -1;
+    let lastOffset = -1;
 
     const updateHorizontalUi = (progress, index) => {
-        currentIndex = clamp(index, 0, Math.max(0, cards.length - 1));
-
-        if (counter && cards.length > 0) {
-            counter.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}`;
-        }
+        const clampedIndex = clamp(index, 0, Math.max(0, cards.length - 1));
 
         if (progressBar && cards.length > 0) {
             const minFill = 1 / cards.length;
             const fill = minFill + (1 - minFill) * clamp(progress, 0, 1);
             progressBar.style.transform = `scaleX(${fill.toFixed(4)})`;
+        }
+
+        if (clampedIndex === currentIndex) {
+            return;
+        }
+
+        currentIndex = clampedIndex;
+
+        if (counter && cards.length > 0) {
+            counter.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}`;
         }
 
         if (prevButton instanceof HTMLButtonElement) {
@@ -122,6 +161,7 @@ if (portfolioRoot instanceof HTMLElement) {
         if (!shouldPin) {
             pinnedMode = false;
             maxTranslate = 0;
+            lastOffset = -1;
             track.style.removeProperty('height');
             rail.style.removeProperty('transform');
             updateMobileCarouselState();
@@ -142,23 +182,28 @@ if (portfolioRoot instanceof HTMLElement) {
 
         pinnedMode = true;
         maxTranslate = overflow;
-        const pinHeight = Math.max(pin.offsetHeight, window.innerHeight - 72);
-        track.style.height = `${Math.round(pinHeight + maxTranslate)}px`;
-        updateHorizontalScroll();
+        lastOffset = -1;
+
+        const pinHeight = Math.max(pin.offsetHeight, window.innerHeight - HEADER_OFFSET);
+        scrollableDistance = Math.max(1, maxTranslate);
+        track.style.height = `${Math.round(pinHeight + scrollableDistance)}px`;
+        trackStart = window.scrollY + track.getBoundingClientRect().top - HEADER_OFFSET;
+
+        updateHorizontalScroll(window.scrollY);
     };
 
-    const updateHorizontalScroll = () => {
-        if (!pinnedMode || !track || !rail || maxTranslate <= 0) {
+    const updateHorizontalScroll = (scrollY) => {
+        if (!pinnedMode || !rail || maxTranslate <= 0) {
             return;
         }
 
-        const rect = track.getBoundingClientRect();
-        const headerOffset = 72;
-        const scrollable = Math.max(1, track.offsetHeight - Math.max(pin.offsetHeight, window.innerHeight - headerOffset));
-        const progress = clamp((headerOffset - rect.top) / scrollable, 0, 1);
-        const offset = progress * maxTranslate;
+        const progress = clamp((scrollY - trackStart) / scrollableDistance, 0, 1);
+        const offset = Math.round(progress * maxTranslate * 2) / 2;
 
-        rail.style.transform = `translate3d(${(-offset).toFixed(1)}px, 0, 0)`;
+        if (offset !== lastOffset) {
+            lastOffset = offset;
+            rail.style.transform = `translate3d(${-offset}px, 0, 0)`;
+        }
 
         const estimatedIndex = Math.round(progress * (cards.length - 1));
         updateHorizontalUi(progress, estimatedIndex);
@@ -182,13 +227,10 @@ if (portfolioRoot instanceof HTMLElement) {
             return;
         }
 
-        if (pinnedMode && track && pin && maxTranslate > 0) {
-            const headerOffset = 72;
-            const scrollable = Math.max(1, track.offsetHeight - Math.max(pin.offsetHeight, window.innerHeight - headerOffset));
+        if (pinnedMode && maxTranslate > 0) {
             const fraction = cards.length > 1 ? clampedIndex / (cards.length - 1) : 0;
-            const trackTop = window.scrollY + track.getBoundingClientRect().top;
             window.scrollTo({
-                top: Math.round(trackTop - headerOffset + fraction * scrollable),
+                top: Math.round(trackStart + fraction * scrollableDistance),
                 behavior: reducedMotion.matches ? 'auto' : 'smooth',
             });
             return;
@@ -217,7 +259,7 @@ if (portfolioRoot instanceof HTMLElement) {
     });
 
     /* -------------------------------------------------------------------------
-     * Unified rAF Scroll & Resize Driver
+     * Unified rAF Scroll Driver (zero DOM reads inside scroll callback)
      * ---------------------------------------------------------------------- */
     let rafId = 0;
     const onScroll = () => {
@@ -227,34 +269,40 @@ if (portfolioRoot instanceof HTMLElement) {
 
         rafId = requestAnimationFrame(() => {
             rafId = 0;
-            updateParallax();
-            updateExperienceHud();
-            updateHorizontalScroll();
+            const scrollY = window.scrollY;
+            updateParallax(scrollY);
+            updateExperienceHud(scrollY);
+            updateHorizontalScroll(scrollY);
         });
     };
 
-    const onEnvironmentChange = () => {
+    const measureAll = () => {
         if (reducedMotion.matches) {
             resetParallax();
-        } else {
-            updateParallax();
         }
+        measureParallax();
+        measureExperience();
         syncHorizontalLayout();
-        updateExperienceHud();
+        const scrollY = window.scrollY;
+        updateParallax(scrollY);
+        updateExperienceHud(scrollY);
+    };
+
+    let resizeTimer = 0;
+    const onResize = () => {
+        window.clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(measureAll, 120);
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', syncHorizontalLayout, { passive: true });
-    reducedMotion.addEventListener('change', onEnvironmentChange);
-    desktopMedia.addEventListener('change', onEnvironmentChange);
+    window.addEventListener('resize', onResize, { passive: true });
+    window.addEventListener('load', measureAll, { once: true });
+    reducedMotion.addEventListener('change', measureAll);
+    desktopMedia.addEventListener('change', measureAll);
 
-    if (pin && 'ResizeObserver' in window) {
-        new ResizeObserver(() => {
-            if (pinnedMode) {
-                syncHorizontalLayout();
-            }
-        }).observe(pin);
+    if (document.fonts?.ready) {
+        document.fonts.ready.then(measureAll);
     }
 
-    onEnvironmentChange();
+    measureAll();
 }
