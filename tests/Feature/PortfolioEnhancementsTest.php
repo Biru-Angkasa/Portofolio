@@ -259,7 +259,7 @@ class PortfolioEnhancementsTest extends TestCase
             $cacheControl = (string) $response->headers->get('Cache-Control');
 
             $this->assertStringContainsString('public', $cacheControl);
-            $this->assertStringContainsString('s-maxage=3600', $cacheControl);
+            $this->assertStringContainsString('s-maxage=30', $cacheControl);
             $this->assertStringContainsString('stale-if-error=604800', $cacheControl);
             $response->assertHeaderMissing('Set-Cookie');
         }

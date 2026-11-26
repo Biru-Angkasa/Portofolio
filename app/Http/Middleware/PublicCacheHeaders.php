@@ -20,7 +20,7 @@ class PublicCacheHeaders
         if ($request->isMethodCacheable() && $response->getStatusCode() === 200) {
             $response->headers->set(
                 'Cache-Control',
-                'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400, stale-if-error=604800'
+                'public, max-age=0, s-maxage=30, stale-while-revalidate=60, stale-if-error=604800'
             );
         }
 
