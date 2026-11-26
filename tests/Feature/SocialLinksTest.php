@@ -16,11 +16,13 @@ class SocialLinksTest extends TestCase
     {
         $this->get(route('home'))
             ->assertOk()
-            ->assertSee('href="mailto:fresstneend@gmail.com" class="portfolio-button', false)
-            ->assertSee('aria-label="Instagram @yaannmys"', false)
+            ->assertSee('href="mailto:fresstheend@gmail.com" class="portfolio-button', false)
+            ->assertSee('aria-label="Instagram @yaanmys"', false)
             ->assertSee('data-social-icon="instagram"', false)
-            ->assertSee('href="https://www.instagram.com/yaannmys/"', false)
-            ->assertDontSee('data-social-link="whatsapp"', false)
+            ->assertSee('href="https://www.instagram.com/yaanmys/"', false)
+            ->assertSee('data-social-link="whatsapp"', false)
+            ->assertSee('data-social-link="linkedin"', false)
+            ->assertSee('data-social-link="github"', false)
             ->assertDontSee('data-social-link="facebook"', false);
     }
 

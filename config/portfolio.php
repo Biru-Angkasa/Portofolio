@@ -5,8 +5,8 @@ return [
     'greeting' => 'Halo, saya',
     'about_title' => 'Di balik perangkat dan koneksi.',
     'skills_title' => 'Keahlian & peralatan',
-    'portfolio_title' => 'Proyek & solusi digital',
-    'portfolio_intro' => 'Aplikasi dan katalog yang saya kembangkan dengan bantuan AI untuk mendukung after-sales, akses informasi produk, dan koordinasi tim.',
+    'portfolio_title' => 'Proyek & solusi teknis',
+    'portfolio_intro' => 'Proyek aplikasi internal, katalog produk, dan pekerjaan infrastruktur teknis untuk mendukung after-sales, operasional lapangan, dan koordinasi tim.',
     'education_title' => 'Pendidikan & sertifikasi',
     'experience_title' => 'Perjalanan profesional',
     'blog_title' => 'Catatan & cerita',
@@ -14,9 +14,10 @@ return [
     'contact_title' => 'Mari terhubung.',
     'contact_intro' => 'Ada pekerjaan teknis yang perlu dibicarakan? Hubungi saya melalui email atau media sosial.',
     'socials' => [
-        ['platform' => 'instagram', 'label' => 'Instagram @yaannmys', 'url' => 'https://www.instagram.com/yaannmys/'],
-        ['platform' => 'whatsapp', 'label' => 'WhatsApp', 'url' => ''],
-        ['platform' => 'facebook', 'label' => 'Facebook', 'url' => ''],
+        ['platform' => 'instagram', 'label' => 'Instagram @yaanmys', 'url' => 'https://www.instagram.com/yaanmys/'],
+        ['platform' => 'whatsapp', 'label' => 'WhatsApp', 'url' => 'https://wa.me/6281995896203'],
+        ['platform' => 'linkedin', 'label' => 'LinkedIn', 'url' => 'https://www.linkedin.com/in/tian-maysa/'],
+        ['platform' => 'github', 'label' => 'GitHub', 'url' => 'https://github.com/Biru-Angkasa'],
     ],
 
     'name' => 'Tian Maysa',
@@ -25,58 +26,55 @@ return [
 
     'role' => 'Network & Technical Support Engineer',
 
-    'lead' => 'Saya menangani troubleshooting jaringan dan perangkat, konfigurasi MikroTik, serta layanan after-sales. Saya juga merancang aplikasi internal untuk mempercepat pencatatan dan koordinasi tim.',
+    'lead' => 'Network & Technical Support Engineer dengan pengalaman 2+ tahun menangani L1/L2 technical support, RMA/garansi, dan remote troubleshooting untuk 50+ pelanggan per minggu. Berpengalaman dalam device staging & konfigurasi jaringan multi-vendor, fiber optic (FTTH/ODP), CCTV, serta pengembangan aplikasi internal.',
 
     'location' => 'Jakarta Pusat, DKI Jakarta',
 
-    'email' => 'fresstneend@gmail.com',
+    'email' => 'fresstheend@gmail.com',
 
     'instagram' => [
-        'handle' => '@yaannmys',
-        'url' => 'https://www.instagram.com/yaannmys/',
+        'handle' => '@yaanmys',
+        'url' => 'https://www.instagram.com/yaanmys/',
     ],
 
     'meta' => [
         'title' => 'Web Portofolio Tian Maysa — Network & Technical Support Engineer',
-        'description' => 'Network & Technical Support Engineer di Jakarta. Berpengalaman di MikroTik, fiber optic, after-sales, dan pengembangan aplikasi internal. Lihat portofolio.',
+        'description' => 'Network & Technical Support Engineer di Jakarta. Berpengalaman di L1/L2 support, konfigurasi multi-vendor (MikroTik, Ruijie, Ubiquiti), fiber optic FTTH/ODP, CCTV, dan aplikasi internal.',
     ],
 
     'highlights' => [
         [
             'value' => '50+',
             'label' => 'pelanggan per minggu',
-            'context' => 'After-sales di Tarmoc.',
+            'context' => 'L1/L2 support & RMA di Tarmoc.',
         ],
         [
             'value' => '±50',
             'label' => 'titik ODP',
-            'context' => 'Saat PKL fiber di Telkom.',
+            'context' => 'Saat PKL fiber optic di Telkom.',
         ],
         [
-            'value' => '±5',
-            'label' => 'video per bulan',
-            'context' => 'Konten TikTok Tarmoc Official.',
+            'value' => '±30',
+            'label' => 'pengguna internal',
+            'context' => 'Aplikasi operasional yang dibangun.',
         ],
     ],
 
-    'about' => 'Di Tarmoc, saya menangani diagnosis dan perbaikan perangkat, pengujian produk, serta dukungan pelanggan secara langsung maupun remote. Pengalaman PKL di Telkom Indonesia mengasah kemampuan saya dalam tracing jalur, validasi koneksi melalui ODP, dan pemeliharaan fiber optic.
+    'about' => 'Network & Technical Support Engineer dengan pengalaman 2+ tahun menangani L1/L2 technical support, RMA/garansi, dan remote troubleshooting untuk 50+ pelanggan per minggu. Berpengalaman dalam device staging dan konfigurasi perangkat jaringan multi-vendor (MikroTik, Ruijie, Ubiquiti, Cambium, TP-Link, V-SOL), perangkat PoE/PoF, instalasi dan peremajaan CCTV, serta pemeliharaan jaringan fiber optic (FTTH/ODP).
 
-Dari pekerjaan sehari-hari, saya menganalisis kebutuhan tim, merancang alur kerja, serta mengimplementasikan dan menguji aplikasi internal untuk pengelolaan komplain, retur, klaim garansi, dan produksi konten. Saya juga membuat katalog digital produk, dokumentasi teknis, serta video edukasi agar informasi lebih mudah dipahami dan digunakan.',
+Selain pekerjaan teknis, saya juga menangani requirement gathering, perancangan alur kerja (workflow digitization), pembuatan aplikasi internal untuk tim operasional, serta functional testing dan UAT bersama pengguna. Saya menyusun SOP, dokumentasi teknis, serta materi edukasi produk agar perangkat dan sistem mudah digunakan.',
 
     'experiences' => [
         [
             'organization' => 'Tarmoc',
             'role' => 'Technical Support & After Sales Service Engineer',
-            'period' => 'Desember 2023 – sekarang',
+            'period' => 'Maret 2024 – sekarang',
             'points' => [
-                'Menangani after-sales dan troubleshooting untuk 50+ pelanggan per minggu.',
-                'Mendiagnosis dan memperbaiki gangguan perangkat elektronik, hardware, dan jaringan.',
-                'Memberi konsultasi teknis langsung maupun remote.',
-                'Menguji produk sebelum distribusi, mengonfigurasi perangkat berbasis MikroTik, serta memelihara jaringan internal dan perangkat pelanggan.',
-                'Menganalisis proses kerja manual dan merancang solusi digital untuk efisiensi pencatatan dan koordinasi tim.',
-                'Merancang dan mengimplementasikan aplikasi internal (komplain, retur, garansi, katalog produk, workspace konten) untuk pemantauan tindak lanjut dan koordinasi tim.',
-                'Membuat dokumentasi teknis, tutorial produk, dan konten promosi digital.',
-                'Memproduksi ±5 video edukasi dan promosi per bulan untuk TikTok Tarmoc Official.',
+                'Menangani L1/L2 technical support, RMA (komplain, retur, klaim garansi), dan troubleshooting produk untuk 50+ pelanggan per minggu secara on-site maupun remote (AnyDesk, TeamViewer, UltraViewer, Windows RDP, Chrome Remote Desktop).',
+                'Melakukan diagnosis gangguan, root cause analysis (RCA), dan perbaikan pada perangkat elektronik, hardware, OS Windows, printer, CCTV, serta infrastruktur jaringan internal (LAN/WLAN).',
+                'Menjalankan Pre-Delivery Inspection (PDI), hardware QC, serta device staging dan konfigurasi perangkat jaringan multi-vendor (MikroTik, Ruijie, Ubiquiti, Cambium, TP-Link, V-SOL, Tarmoc), termasuk perangkat PoE aktif/pasif dan PoF sebelum distribusi.',
+                'Melakukan requirement gathering, workflow digitization, dan membangun aplikasi internal yang digunakan hingga sekitar 30 pengguna (pencatatan RMA/komplain, tracking garansi, katalog produk, dan workspace produksi konten), termasuk functional testing dan UAT bersama tim sebelum digunakan operasional.',
+                'Menyusun SOP, dokumentasi teknis, dan materi edukasi produk, termasuk memproduksi sekitar 5 video teknis/promosi per bulan untuk kanal resmi perusahaan.',
             ],
         ],
         [
@@ -84,19 +82,26 @@ Dari pekerjaan sehari-hari, saya menganalisis kebutuhan tim, merancang alur kerj
             'role' => 'PKL, Fiber Termination Management (FTM)',
             'period' => 'Agustus 2022 – September 2022',
             'points' => [
-                'Membantu pengelolaan dan pemeliharaan jaringan fiber optic.',
-                'Melakukan tracing dan penataan jalur, penggantian modul SFP pada OLT/router/switch, serta validasi koneksi pelanggan melalui ODP.',
-                'Mendukung operasional teknis hingga ±50 titik ODP.',
+                'Mendukung pemeliharaan operasional jaringan fiber optic (FTTH) dan manajemen terminasi di lapangan.',
+                'Melakukan fiber patching, cable tracing, penataan jalur, penggantian modul SFP transceiver pada OLT/router/switch, serta link validation koneksi pelanggan melalui ODP.',
+                'Menangani operasional teknis dan pengecekan pada sekitar 50 titik ODP selama masa praktik.',
             ],
         ],
     ],
 
     'skills' => [
         [
-            'name' => 'Networking',
+            'name' => 'Networking & Infrastructure',
             'items' => [
-                'Konfigurasi dasar MikroTik',
-                'IPv4 subnetting',
+                'MikroTik',
+                'Ruijie',
+                'Ubiquiti',
+                'Cambium',
+                'TP-Link',
+                'V-SOL',
+                'Tarmoc',
+                'Device Staging & Pre-Configuration',
+                'IPv4 Subnetting',
                 'TCP/IP',
                 'UDP',
                 'VPN',
@@ -105,11 +110,14 @@ Dari pekerjaan sehari-hari, saya menganalisis kebutuhan tim, merancang alur kerj
                 'PPPoE',
                 'Firewall',
                 'Hotspot',
-                'Wireless',
+                'Wireless (LAN/WLAN)',
+                'PoE (Aktif/Pasif)',
+                'PoF',
+                'Diagnostik jaringan (ping, traceroute)',
             ],
         ],
         [
-            'name' => 'Fiber Optic',
+            'name' => 'Fiber Optic (FTTH/FTM)',
             'items' => [
                 'Desain topologi',
                 'Splicer',
@@ -117,32 +125,39 @@ Dari pekerjaan sehari-hari, saya menganalisis kebutuhan tim, merancang alur kerj
                 'OPM',
                 'VFL',
                 'CWDM',
-                'Manajemen kabel',
-                'Perhitungan daya optik (dBm)',
+                'Fiber Patching & Cable Tracing',
+                'Manajemen kabel ODP',
+                'Penggantian SFP transceiver',
+                'Perhitungan optical power budget (dBm)',
             ],
         ],
         [
-            'name' => 'Technical Support',
+            'name' => 'Technical Support & Remote Tools',
             'items' => [
-                'Troubleshooting hardware dan elektronik',
-                'Perbaikan dan pengujian perangkat',
-                'After-sales',
-                'Garansi',
-                'Dukungan pelanggan',
-                'Diagnosis masalah',
+                'L1/L2 Technical Support',
+                'Hardware & OS Windows Troubleshooting',
+                'RMA & Warranty Handling',
+                'Pre-Delivery Inspection (PDI) / QC',
+                'Root Cause Analysis (RCA)',
+                'Printer & Endpoint Support',
+                'Instalasi & Structured Re-cabling CCTV',
+                'AnyDesk',
+                'TeamViewer',
+                'UltraViewer',
+                'Windows Remote Desktop (RDP)',
+                'Chrome Remote Desktop',
             ],
         ],
         [
-            'name' => 'Analisis & Solusi Digital',
+            'name' => 'Internal Tools & Testing',
             'items' => [
-                'Analisis proses kerja manual',
-                'Pemetaan kebutuhan aplikasi internal',
-                'Perancangan alur kerja after-sales',
-                'Pengembangan dan pengujian aplikasi internal',
-                'Prompt engineering & requirement specification',
-                'Penyesuaian fitur dengan kebutuhan tim',
-                'Penyederhanaan pencatatan dan koordinasi tim',
+                'Requirement Gathering',
+                'Business Process Mapping',
+                'Functional Testing & UAT',
+                'Workflow Digitization',
                 'Python dasar',
+                'Flutter (Dart)',
+                'Supabase',
             ],
         ],
         [
@@ -155,13 +170,12 @@ Dari pekerjaan sehari-hari, saya menganalisis kebutuhan tim, merancang alur kerj
             ],
         ],
         [
-            'name' => 'Content & Documentation',
+            'name' => 'Dokumentasi & Edukasi Teknis',
             'items' => [
-                'Video editing dengan CapCut',
-                'Konten TikTok produk teknis',
-                'Tutorial produk',
-                'Video edukasi',
+                'Penyusunan SOP',
                 'Dokumentasi teknis',
+                'Tutorial produk',
+                'Editing video teknis (CapCut)',
             ],
         ],
     ],
@@ -184,14 +198,14 @@ Dari pekerjaan sehari-hari, saya menganalisis kebutuhan tim, merancang alur kerj
     'education' => [
         [
             'institution' => 'Universitas Teknologi Muhammadiyah',
-            'program' => 'Sistem Teknologi Informasi',
+            'program' => 'S1 Sistem Teknologi Informasi',
             'period' => '2024 – sekarang',
             'logo_path' => 'images/education/utmj.png',
             'url' => 'https://www.utmj.ac.id/',
         ],
         [
             'institution' => 'SMK Muhammadiyah 04 Jakarta',
-            'program' => 'Teknik Komputer dan Jaringan',
+            'program' => 'Teknik Komputer dan Jaringan (TKJ)',
             'period' => '2020 – 2023',
             'logo_path' => 'images/education/smkm4.png',
             'url' => 'https://smkm4.sch.id/',
@@ -199,8 +213,10 @@ Dari pekerjaan sehari-hari, saya menganalisis kebutuhan tim, merancang alur kerj
     ],
 
     'certifications' => [
-        ['name' => 'BNSP Komputer', 'year' => '2023'],
-        ['name' => 'BNSP Fiber Optik Telkom', 'year' => '2023'],
+        ['name' => 'MikroTik Administration - Aguna Course (ID: AC-134-45487968-20)', 'year' => '2025'],
+        ['name' => 'Python Fundamental - Aguna Course (ID: AC-366-56062226-02)', 'year' => '2025'],
+        ['name' => 'BNSP Fiber Optik Telkom - Badan Nasional Sertifikasi Profesi (BNSP)', 'year' => '2023'],
+        ['name' => 'BNSP Komputer - Badan Nasional Sertifikasi Profesi (BNSP)', 'year' => '2023'],
     ],
 
 ];

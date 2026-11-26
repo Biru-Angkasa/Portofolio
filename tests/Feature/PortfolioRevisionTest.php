@@ -137,7 +137,7 @@ class PortfolioRevisionTest extends TestCase
                 'socials' => [['platform' => 'linkedin', 'label' => 'Linkedln', 'url' => 'https://www.linkedin.com/in/tian-maysa/']],
                 'experiences' => [['organization' => 'Tarmoc', 'role' => 'Technical Support', 'period' => 'Maret 2024 – sekarang', 'points' => ['Mengembangkan dengan bantuan AI.']]],
                 'skills' => [
-                    ...array_filter(config('portfolio.skills'), fn (array $skill): bool => $skill['name'] !== 'Analisis & Solusi Digital'),
+                    ...array_slice(config('portfolio.skills'), 0, 5),
                     ['name' => 'Digital Solutions & AI', 'items' => ['Pengembangan aplikasi internal dengan bantuan AI']],
                     ['name' => 'Analisis & Digitalisasi Proses', 'items' => ['Pemetaan alur kerja after-sales']],
                 ],
@@ -178,6 +178,6 @@ class PortfolioRevisionTest extends TestCase
         $response->assertDontSee('Workspaces');
         $response->assertDontSee('metodelogi');
         $response->assertDontSee('Linkedln');
-        $this->assertSame(1, substr_count($response->getContent(), 'dengan bantuan AI'));
+        $this->assertSame(0, substr_count($response->getContent(), 'dengan bantuan AI'));
     }
 }

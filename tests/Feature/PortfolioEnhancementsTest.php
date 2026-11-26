@@ -226,7 +226,7 @@ class PortfolioEnhancementsTest extends TestCase
         $person = $schema['mainEntity'];
         $this->assertSame('Tarmoc', $person['worksFor'][0]['name']);
         $this->assertSame('Universitas Teknologi Muhammadiyah', $person['alumniOf'][0]['name']);
-        $this->assertSame('BNSP Komputer', $person['hasCredential'][0]['name']);
+        $this->assertSame('MikroTik Administration - Aguna Course (ID: AC-134-45487968-20)', $person['hasCredential'][0]['name']);
     }
 
     public function test_bukti_index_redirects_to_home_portfolio_section_and_project_page_shows_tech_and_other_projects(): void

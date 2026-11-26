@@ -22,8 +22,12 @@ class PortfolioPageTest extends TestCase
         $this->assertSame('https://portfolio.example#person', $schema['mainEntity']['@id']);
         $this->assertSame('Tian Maysa', $schema['mainEntity']['name']);
         $this->assertSame('Network & Technical Support Engineer', $schema['mainEntity']['jobTitle']);
-        $this->assertContains('Konfigurasi dasar MikroTik', $schema['mainEntity']['knowsAbout']);
-        $this->assertSame(['https://www.instagram.com/yaannmys/'], $schema['mainEntity']['sameAs']);
+        $this->assertContains('MikroTik', $schema['mainEntity']['knowsAbout']);
+        $this->assertSame([
+            'https://www.instagram.com/yaanmys/',
+            'https://www.linkedin.com/in/tian-maysa/',
+            'https://github.com/Biru-Angkasa',
+        ], $schema['mainEntity']['sameAs']);
         $this->assertArrayNotHasKey('image', $schema['mainEntity']);
     }
 
@@ -85,17 +89,17 @@ class PortfolioPageTest extends TestCase
 
         $response->assertSee('Tian Maysa');
         $response->assertSee('Network & Technical Support Engineer');
-        $response->assertSee('After-sales di Tarmoc.');
-        $response->assertSee('Saat PKL fiber di Telkom.');
+        $response->assertSee('L1/L2 support & RMA di Tarmoc.');
+        $response->assertSee('Saat PKL fiber optic di Telkom.');
         $response->assertSee('Tarmoc');
         $response->assertSee('PT Telkom Indonesia');
-        $response->assertSee('Mendukung operasional teknis hingga ±50 titik ODP.');
+        $response->assertSee('Menangani operasional teknis dan pengecekan pada sekitar 50 titik ODP selama masa praktik.');
         $response->assertSee('Universitas Teknologi Muhammadiyah');
         $response->assertSee('BNSP Fiber Optik Telkom');
-        $response->assertSee('fresstneend@gmail.com');
-        $response->assertSee('@yaannmys');
-        $response->assertSee('mailto:fresstneend@gmail.com', false);
-        $response->assertSee('https://www.instagram.com/yaannmys/', false);
+        $response->assertSee('fresstheend@gmail.com');
+        $response->assertSee('@yaanmys');
+        $response->assertSee('mailto:fresstheend@gmail.com', false);
+        $response->assertSee('https://www.instagram.com/yaanmys/', false);
         $response->assertSee('rel="noopener noreferrer"', false);
         $response->assertSee('<html lang="id"', false);
         $response->assertSee('property="og:description"', false);
