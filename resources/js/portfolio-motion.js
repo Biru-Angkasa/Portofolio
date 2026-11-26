@@ -116,7 +116,7 @@ if (portfolioRoot instanceof HTMLElement) {
         }
 
         const shouldPin = desktopMedia.matches && !reducedMotion.matches;
-        showcase.classList.toggle('is-horizontal-enhanced', !reducedMotion.matches);
+        showcase.classList.add('is-horizontal-enhanced');
         showcase.classList.toggle('is-horizontal-pinned', shouldPin);
 
         if (!shouldPin) {
@@ -195,10 +195,12 @@ if (portfolioRoot instanceof HTMLElement) {
         }
 
         if (viewport) {
+            const cardLeft = targetCard.offsetLeft - rail.offsetLeft;
             viewport.scrollTo({
-                left: targetCard.offsetLeft,
+                left: Math.max(0, cardLeft),
                 behavior: reducedMotion.matches ? 'auto' : 'smooth',
             });
+            updateHorizontalUi(cards.length > 1 ? clampedIndex / (cards.length - 1) : 1, clampedIndex);
         }
     };
 
